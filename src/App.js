@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import AppRouter from './components/AppRouter'
 //context import
-import UserContext from '../contexts/UserContext'
+import UserContext from './contexts/UserContext'
 
 function App() {
   const [user, setUser] = useState('TEST')
