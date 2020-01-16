@@ -10,8 +10,9 @@ const UserPage = () => {
   const { user } = useContext(UserContext)
   const [ coins, setCoins ] = useState(0)
   const [ chain, setChain ] = useState([])
-  const [ receipts, setReceipts ] = useState({})
+  const [ receipts, setReceipts ] = useState([])
 
+  // grab the chain data
   useEffect(() => {
     axios.get(`${url}/chain`)
     .then(res => {
@@ -19,15 +20,26 @@ const UserPage = () => {
     })
   }, [user])
 
+  // get all transaction involving user
   useEffect(() => {
     if (chain) {
       chain.forEach(block => {
         block.transactions.forEach(trans => {
-          if (trans.recipient === user) setCoins(coins => coins += trans.amount)
+          if (trans.recipient === user || trans.sender === user) setReceipts(receipts => [...receipts, trans])
         })
       })
     }
   }, [chain])
+
+  // grab coins
+  useEffect(() => {
+    if (receipts) {
+      receipts.forEach(receipt => {
+        if (receipt.recipient === user) setCoins(coins => coins += receipt.amount)
+        else if (receipt.sender === user) setCoins(coins => coins -= receipt.amount)
+      })
+    }
+  }, [receipts])
 
   return (
     <div>
