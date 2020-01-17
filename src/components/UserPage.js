@@ -46,10 +46,10 @@ const UserPage = () => {
       <h1>Welcome {user}!</h1>
       <h2>You have {coins} coins.</h2>
       <h2>Transactions:</h2>
-      {receipts.map(receipt => (
-        <div>
+      {receipts.map((receipt, index) => (
+        <div key={Date.now()+index} style={(receipt.sender === user) ? {color:'red'} : {color:'green'}}>
           <p>Sender: {receipt.sender}</p>
-          <p>recipient: {receipt.recipient}</p>
+          <p>Recipient: {receipt.recipient}</p>
           <p>Amount: {receipt.amount}</p>
         </div>
       ))}
