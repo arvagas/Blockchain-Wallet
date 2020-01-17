@@ -45,6 +45,14 @@ const UserPage = () => {
     <div>
       <h1>Welcome {user}!</h1>
       <h2>You have {coins} coins.</h2>
+      <h2>Transactions:</h2>
+      {receipts.map(receipt => (
+        <div>
+          <p>Sender: {receipt.sender}</p>
+          <p>recipient: {receipt.recipient}</p>
+          <p>Amount: {receipt.amount}</p>
+        </div>
+      ))}
     </div>
   )
 }
